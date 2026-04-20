@@ -8,7 +8,21 @@ import org.junit.jupiter.api.Assertions;
 public class SortTest {
 
     private static int[] sort(int[] nums) {
-        return nums;
+        int[] sorted = Arrays.copyOf(nums, nums.length);
+
+        for (int i = 0; i < sorted.length - 1; ++i) {
+            int minIndex = i;
+            for (int j = i + 1; j < sorted.length; ++j) {
+                if (sorted[j] < sorted[minIndex]) {
+                    minIndex = j;
+                }
+            }
+
+            int tmp = sorted[i];
+            sorted[i] = sorted[minIndex];
+            sorted[minIndex] = tmp;
+        }
+        return sorted;
     }
 
     @Test
