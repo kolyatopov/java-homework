@@ -9,7 +9,14 @@ public class CASTicketLock {
     private final AtomicInteger nextTicket = new AtomicInteger();
     private final AtomicInteger currentTicket = new AtomicInteger();
 
-    public void lock() {}
+    public void lock() {
+        int ticket = nextTicket.getAndIncrement();
+        while (ticket != currentTicket.get()) {
+            Thread.onSpinWait();
+        }
+    }
 
-    public void unlock() {}
+    public void unlock() {
+        currentTicket.incrementAndGet();
+    }
 }
