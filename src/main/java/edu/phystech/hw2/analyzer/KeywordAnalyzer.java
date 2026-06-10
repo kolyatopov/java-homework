@@ -12,8 +12,17 @@ public abstract class KeywordAnalyzer implements TextAnalyzer {
         this.label = label;
     }
 
+    protected boolean containsKeyword(String text, String keyword) {
+        return text.contains(keyword);
+    }
+
     @Override
     public Label processText(String text) {
-        return null;
+        for (String keyword : keywords) {
+            if (containsKeyword(text, keyword)) {
+                return label;
+            }
+        }
+        return Label.OK;
     }
 }
